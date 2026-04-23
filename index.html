@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sound and Fire Detection Security System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🔥</span>
+      <div>
+        <h1>Sound & Fire Detection Security</h1>
+        <p>Live IoT dashboard for Arduino/ESP8266 security alerting</p>
+      </div>
+    </div>
+    <button id="resetBtn" class="btn reset-btn">Reset Alarm</button>
+  </header>
+
+  <main class="container">
+    <section class="status-panel">
+      <div class="status-card">
+        <div class="status-icon" id="statusIcon">✔️</div>
+        <div class="status-text">
+          <h2>Live Status</h2>
+          <p id="statusLabel">System Normal</p>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-icon">🎤</span>
+          <div>
+            <h3>Sound Sensor</h3>
+            <p id="soundValue">-</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">🔥</span>
+          <div>
+            <h3>Flame Sensor</h3>
+            <p id="flameValue">-</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">🔔</span>
+          <div>
+            <h3>Alarm Status</h3>
+            <p id="alarmValue">OFF</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="log-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Event Log</h2>
+          <p>Latest sensor events and timestamped alerts</p>
+        </div>
+        <span class="refresh-label">Auto refresh every 2s</span>
+      </div>
+      <div id="logList" class="log-list">
+        <div class="log-empty">Waiting for sensor updates...</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
