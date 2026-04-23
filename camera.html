@@ -1,0 +1,73 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+
+const int soundPin = A0; // Connect sound sensor analog output to A0
+const int flamePin = D5; // Connect flame sensor digital output to D5
+const int buzzerPin = D6;
+const int ledPin = D7;
+
+ESP8266WebServer server(80);
+
+void handleStatus() {
+  int soundValue = analogRead(soundPin);
+  int flameValue = digitalRead(flamePin);
+  bool soundDetected = soundValue > 600;
+  bool flameDetected = flameValue == LOW; // flame sensor output often pulls low when triggered
+  bool fireAlert = flameDetected;
+  bool alarmActive = fireAlert;
+
+  if (alarmActive) {
+    digitalWrite(buzzerPin, HIGH);
+    digitalWrite(ledPin, millis() / 250 % 2 == 0 ? HIGH : LOW);
+  } else {
+    digitalWrite(buzzerPin, LOW);
+    digitalWrite(ledPin, LOW);
+  }
+
+  String payload = "{";
+  payload += "\"soundDetected\":" + String(soundDetected ? "true" : "false") + ",";
+  payload += "\"flameDetected\":" + String(flameDetected ? "true" : "false") + ",";
+  payload += "\"fireAlert\":" + String(fireAlert ? "true" : "false") + ",";
+  payload += "\"alarmActive\":" + String(alarmActive ? "true" : "false");
+  payload += "}";
+
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.send(200, "application/json", payload);
+}
+
+void setup() {
+  pinMode(soundPin, INPUT);
+  pinMode(flamePin, INPUT_PULLUP);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(buzzerPin, LOW);
+  digitalWrite(ledPin, LOW);
+
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  Serial.print("Connecting to WiFi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.print("Connected. IP address: ");
+  Serial.println(WiFi.localIP());
+
+  server.on("/status", handleStatus);
+  server.onNotFound([]() {
+    server.send(404, "text/plain", "Not found");
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}
