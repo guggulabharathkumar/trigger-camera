@@ -1,74 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sound and Fire Detection Security System</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ConnectHub IoT | Smart Device Monitoring Platform</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <span class="brand-icon">🔥</span>
-      <div>
-        <h1>Sound & Fire Detection Security</h1>
-        <p>Live IoT dashboard for Arduino/ESP8266 security alerting</p>
-      </div>
+
+<!-- ================= PRELOADER ================= -->
+
+<div id="loader">
+    <div class="spinner"></div>
+    <h2>ConnectHub IoT</h2>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-microchip"></i>
+
+        <span>ConnectHub IoT</span>
+
     </div>
-    <button id="resetBtn" class="btn reset-btn">Reset Alarm</button>
-  </header>
 
-  <main class="container">
-    <section class="status-panel">
-      <div class="status-card">
-        <div class="status-icon" id="statusIcon">✔️</div>
-        <div class="status-text">
-          <h2>Live Status</h2>
-          <p id="statusLabel">System Normal</p>
-        </div>
-      </div>
+    <ul class="nav-links">
 
-      <div class="info-grid">
-        <div class="info-card">
-          <span class="info-icon">🎤</span>
-          <div>
-            <h3>Sound Sensor</h3>
-            <p id="soundValue">-</p>
-          </div>
-        </div>
-        <div class="info-card">
-          <span class="info-icon">🔥</span>
-          <div>
-            <h3>Flame Sensor</h3>
-            <p id="flameValue">-</p>
-          </div>
-        </div>
-        <div class="info-card">
-          <span class="info-icon">🔔</span>
-          <div>
-            <h3>Alarm Status</h3>
-            <p id="alarmValue">OFF</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <li><a href="#home">Home</a></li>
 
-    <section class="log-panel">
-      <div class="panel-heading">
-        <div>
-          <h2>Event Log</h2>
-          <p>Latest sensor events and timestamped alerts</p>
-        </div>
-        <span class="refresh-label">Auto refresh every 2s</span>
-      </div>
-      <div id="logList" class="log-list">
-        <div class="log-empty">Waiting for sensor updates...</div>
-      </div>
-    </section>
-  </main>
+        <li><a href="#dashboard">Dashboard</a></li>
 
-  <div id="toast" class="toast hidden"></div>
+        <li><a href="#devices">Devices</a></li>
 
-  <script src="script.js"></script>
-</body>
-</html>
+        <li><a href="#analytics">Analytics</a></li>
+
+        <li><a href="#alerts">Alerts</a></li>
+
+        <li><a href="#contact">Contact</a></li>
+
+    </ul>
+
+    <div class="nav-buttons">
+
+        <button class="theme-btn">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <button class="login-btn">
+
+            Login
+
+        </button>
+
+    </div>
+
+</nav>
+
+</header>
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero" id="home">
+
+<div class="hero-left">
+
+<h5>SMART SECURITY PLATFORM</h5>
+
+<h1>
+
+Monitor Every Device
+
+<span>Anywhere.</span>
+
+</h1>
+
+<p>
+
+A professional IoT dashboard to monitor cameras,
+fire sensors, sound sensors and smart devices
+in real time.
+
+Secure.
+
+Reliable.
+
+Cloud Connected.
+
+</p>
+
+<div class="hero-buttons">
+
+<button class="primary-btn">
+
+View Dashboard
+
+</button>
+
+<button class="secondary-btn">
+
+Learn More
+
+</button>
+
+</div>
+
+<div class="hero-stats">
+
+<div>
+
+<h2>250+</h2>
+
+<p>Connected Devices</p>
+
+</div>
+
+<div>
+
+<h2>99.9%</h2>
+
+<p>System Uptime</p>
+
+</div>
+
+<div>
+
+<h2>18</h2>
+
+<p>Locations</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="hero-card">
+
+<div class="status-dot"></div>
+
+<h3>System Online</h3>
+
+<p>All devices are working normally.</p>
+
+<hr>
+
+<div class="device">
+
+<i class="fa-solid fa-camera"></i>
+
+<span>ESP32 Camera</span>
+
+<span class="online">ONLINE</span>
+
+</div>
+
+<div class="device">
+
+<i class="fa-solid fa-fire"></i>
+
+<span>Fire Sensor</span>
+
+<span class="safe">SAFE</span>
+
+</div>
+
+<div class="device">
+
+<i class="fa-solid fa-volume-high"></i>
+
+<span>Sound Sensor</span>
+
+<span class="normal">NORMAL</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= QUICK STATUS ================= -->
+
+<section class="quick-status">
+
+<div class="status-card">
+
+<i class="fa-solid fa-server"></i>
+
+<h3>System Health</h3>
+
+<h2>99.8%</h2>
+
+<p>Excellent</p>
+
+</div>
+
+<div class="status-card">
+
+<i class="fa-solid fa-wifi"></i>
+
+<h3>Online Devices</h3>
+
+<h2>24</h2>
+
+<p>Connected</p>
+
+</div>
+
+<div class="status-card">
+
+<i class="fa-solid fa-bell"></i>
+
+<h3>Today's Alerts</h3>
+
+<h2>03</h2>
+
+<p>Requires Attention</p>
+
+</div>
+
+<div class="status-card">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>Uptime</h3>
+
+<h2>24 Days</h2>
+
+<p>No Downtime</p>
+
+</div>
+
+</section>
+
+<!-- ================= DASHBOARD PREVIEW ================= -->
+
+<main>
+
+<section class="dashboard-preview" id="dashboard">
+
+<div class="section-title">
+
+<h2>
+
+Live Dashboard
+
+</h2>
+
+<p>
+
+Monitor every connected device from one place.
+
+</p>
+
+</div>
+
+<div class="dashboard-grid">
+
+<!-- Camera Card -->
+
+<div class="dashboard-card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-video"></i>
+
+Live Camera
+
+</h3>
+
+<span class="badge online">
+
+ONLINE
+
+</span>
+
+</div>
+
+<img src="images/camera.jpg"
+
+alt="Camera"
+
+class="camera-image">
+
+<div class="camera-info">
+
+<p>Resolution : 1920 × 1080</p>
+
+<p>FPS : 30</p>
+
+<p>Storage : 256 GB</p>
+
+</div>
+
+<button class="card-btn">
+
+View Live Feed
+
+</button>
+
+</div>
+
+<!-- Fire Sensor -->
+
+<div class="dashboard-card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-fire"></i>
+
+Fire Sensor
+
+</h3>
+
+<span class="badge safe">
+
+SAFE
+
+</span>
+
+</div>
+
+<div class="sensor-circle">
+
+22°C
+
+</div>
+
+<div class="sensor-details">
+
+<p>Temperature Normal</p>
+
+<p>No Fire Detected</p>
+
+</div>
+
+<button class="card-btn">
+
+Sensor Details
+
+</button>
+
+</div>
+
+<!-- Sound Sensor -->
+
+<div class="dashboard-card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-volume-high"></i>
+
+Sound Sensor
+
+</h3>
+
+<span class="badge normal">
+
+NORMAL
+
+</span>
+
+</div>
+
+<div class="sensor-circle">
+
+48 dB
+
+</div>
+
+<div class="sensor-details">
+
+<p>Ambient Noise</p>
+
+<p>No Alert</p>
+
+</div>
+
+<button class="card-btn">
+
+View Data
+
+</button>
+
+</div>
